@@ -1,4 +1,5 @@
 # Tries
 ```
-Console.log("i love you.");
+nodemon --exec csc tries.cs
+nodemon --exec mono tries.exe
 ```

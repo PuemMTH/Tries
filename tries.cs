@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-// https://youtu.be/LIrtBZRe0gE?list=PLzDfwQwcvDq7Il9dZgvsK_eL6ODJCwtaI
 namespace Tries_namespace
 {
     internal class Program
@@ -19,53 +18,80 @@ namespace Tries_namespace
 
         class Tries {
             private Node root = new Node();
-            public void PrintTrie(){
+
+
+            public Node GetRoot(){
+                return root;
+            }
+
+            public void PrintTries(){
                 bool last = false;
                 int i = 0;
                 foreach(char key in root.chliden.Keys){
-                    Console.WriteLine("+- "+ key);
-                    if(i == root.chliden.Count - 1) last = true;
-                    PrintTries(root.chliden[key], "", last);
+                    Console.WriteLine("+- "+key);
+                    if(i == root.chliden.Count - 1){
+                        last = true;
+                    }
+                    PrintTrie(root.chliden[key], "", last);
                     i++;
                 }
             }
-            private void PrintTries(Node dic, string indent, bool last){
-                // Console.WriteLine(indent + "+- " + dic.Keys);
-                // indent += last ? "  " : "|  ";
-                // if (dic.Left != null && dic.Right != null)
-                // {
-                //     PrintTries(dic.Left, indent, false);
-                //     PrintTries(dic.Right, indent, true);
-                // }
-                // else if (dic.Left != null) PrintTries(dic.Left, indent, true);
-                // else if (dic.Right != null) PrintTries(dic.Right, indent, true);
+            private void PrintTrie(Node dic, string indent, bool last){
+                int i = 0;
+                bool tmp = false;
+                indent += last ? "   " : "|  ";
+                foreach (char key in dic.chliden.Keys)
+                {
+                    Console.WriteLine(indent + "+- " + key);
+                    if (i == dic.chliden.Count - 1) tmp = true;
+                    PrintTrie(dic.chliden[key], indent, tmp);
+                    i++;
+                }
             }
+
             public bool Contains(string word){
                 Node current = root;
-                foreach (char child in word){
-                    if(current.chliden.ContainsKey(child)){
-                        current = current.chliden[child];
-                    }else{
-                        return false;
-                    }
+                foreach(char c in word){
+                    if(!current.chliden.ContainsKey(c)) return false;
+                    current = current.chliden[c];
                 }
                 return current.flag;
             }
+
             public void Inseart(string text){
                 char[] s = text.ToCharArray();
-                // if(dic.Conta)
                 int i = 0;
-                while (i != s.Length){
-                    Console.WriteLine(s[i]);
+                Node current = root;
+                while(i < s.Length){
+                    if(current.chliden.ContainsKey(s[i])){
+                        current = current.chliden[s[i]];
+                    }else{
+                        Node node = new Node();
+                        current.chliden.Add(s[i], node);
+                        current = node;
+                    }
                     i++;
                 }
+                current.flag = true;
             }
         }
+
         static void Main(string[] args)
         {
-            Console.WriteLine("Running");
             Tries tries = new Tries();
-            tries.Inseart("Jouney");
+            tries.Inseart("jame");
+            tries.Inseart("jim");
+            tries.Inseart("joy");
+            tries.Inseart("jack");
+            tries.Inseart("big");
+            tries.Inseart("boy");
+            tries.Inseart("java");
+            if(tries.Contains("bi")){
+                Console.WriteLine("Have");
+            }else{
+                Console.WriteLine("Dont");
+            }
+            tries.PrintTries();
         }
     }
 }
