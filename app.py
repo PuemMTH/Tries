@@ -61,3 +61,16 @@ if __name__ == '__main__':
     tries.inseart("jack")
     tries.inseart("big")
     tries.printTries()
+# +-j
+# |  +-a
+# |  |  +-m
+# |  |  |  +-e
+# |  |  +-c
+# |  |     +-k
+# |  +-i
+# |  |  +-m
+# |  +-o
+# |     +-y
+# +-b
+#    +-i
+#       +-g
